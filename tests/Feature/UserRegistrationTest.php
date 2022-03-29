@@ -27,56 +27,61 @@ class UserRegistrationTest extends TestCase
         $response->assertJson(['status'=>200, 'message'=>'User has been added succesfully']);
     }
 
-    public function test_user_cannot_register_without_name()
+    /**
+     * @dataProvider  invalidUserDataProvider
+     */
+    public function test_user_cant_register_with_invalid_data($user)
     {
-        $data = [
-            'email' => 'felicrosa@gmail.com',
-            'password' => '12345678',
-            'password_confirmation' => '12345678',
-        ];
-
-        $response = $this->postJson('/api/register', $data);
-
+        $response = $this->postJson('/api/register', $user);
         $response->assertStatus(422);
-        $response->assertJson(['message'=>'The name field is required.']);
     }
 
-    public function test_user_cannot_register_without_password()
+    public function invalidUserDataProvider(): array
     {
-        $data = [
-            'name' => 'Felipe',
-            'email' => 'felicrosa@gmail.com',
-
+        return [
+            ['no Name'=>[
+                'email' => 'felicrosa@gmail.com',
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
+            ]],
+            ['no Password'=>[
+                'name' => 'Felipe',
+                'email' => 'felicrosa@gmail.com',
+            ]],
+            ['no Password Confirmation'=>[
+                'name' => 'Felipe',
+                'email' => 'felicrosa@gmail.com',
+                'password' => '12345678',
+            ]],
+            ['wrong Password Confirmation'=>[
+                'name' => 'Felipe',
+                'email' => 'felicrosa@gmail.com',
+                'password' => '12345678',
+                'password_confirmation' => '1234545678',
+            ]],
+            ['no email'=>[
+                'name' => 'Felipe',
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
+            ]],
+            ['invalid email'=>[
+                'name' => 'Felipe',
+                'email' => 'felicrosamail.com',
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
+            ]],
+            ['invalid name'=>[
+                'name' => 'Fel4ipe',
+                'email' => 'felicrosa@gmail.com',
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
+            ]],
+            ['shortPassword'=>[
+                'name' => 'Felipe',
+                'email' => 'felicrosa@gmail.com',
+                'password' => '1454',
+                'password_confirmation' => '1454',
+            ]],
         ];
-
-        $response = $this->postJson('/api/register', $data);
-        $response->assertStatus(422);
-        $response->assertJson(['message'=>'The password field is required.']);
-    }
-
-    public function test_user_cannot_register_without_password_confirmation()
-    {
-        $data = [
-            'name' => 'Felipe',
-            'email' => 'felicrosa@gmail.com',
-            'password' => '12345678',
-        ];
-
-        $response = $this->postJson('/api/register', $data);
-        $response->assertStatus(422);
-        $response->assertJson(['message'=>'The password confirmation does not match.']);
-    }
-
-    public function test_user_cannot_register_without_email()
-    {
-        $data = [
-            'name' => 'Felipe',
-            'password' => '12345678',
-            'password_confirmation' => '12345678',
-        ];
-
-        $response = $this->postJson('/api/register', $data);
-        $response->assertStatus(422);
-        $response->assertJson(['message'=>'The email field is required.']);
     }
 }
