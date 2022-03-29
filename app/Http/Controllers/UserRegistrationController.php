@@ -10,7 +10,7 @@ class UserRegistrationController extends Controller
 {
     public function __invoke(UserRegistrationRequest $request) : JsonResponse
     {
-        User::create($request->toArray());
+        User::create($request->validated());
 
         $response = [
             'status'=>200,
