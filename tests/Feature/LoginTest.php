@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -13,7 +14,7 @@ class LoginTest extends TestCase
     public function test_users_log_in_succesfully()
     {
         $user = User::factory()->create([
-            'password'=>bcrypt('1234567'),
+            'password'=> Hash::make('1234567'),
         ]);
 
         $response = $this->postJson('/api/login', ['email'=>$user->email, 'password'=>'1234567']);

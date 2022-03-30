@@ -19,8 +19,6 @@ class UserRegistrationController extends Controller
         $response = [
             'status'=>200,
             'message'=>'User has been added succesfully',
-            'token'=>$user->createToken('app')->plainTextToken,
-            'user'=>$user,
         ];
 
         return response()->json($response);
