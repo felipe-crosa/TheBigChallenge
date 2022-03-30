@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,7 +26,9 @@ class UserRegistrationTest extends TestCase
 
         $response->assertJson(['status'=>200, 'message'=>'User has been added succesfully']);
     }
-    public function test_password_is_encrypted_in_database(){
+
+    public function test_password_is_encrypted_in_database()
+    {
         $data = [
             'name' => 'Felipe',
             'email' => 'felicrosa@gmail.com',
@@ -36,8 +37,7 @@ class UserRegistrationTest extends TestCase
         ];
         $this->postJson('/api/register', $data);
 
-        $this->assertDatabaseMissing('users',['password'=>'12345678']);
-
+        $this->assertDatabaseMissing('users', ['password'=>'12345678']);
     }
 
     /**

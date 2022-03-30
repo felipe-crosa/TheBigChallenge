@@ -13,7 +13,7 @@ class LoginTest extends TestCase
     public function test_users_log_in_succesfully()
     {
         $user = User::factory()->create([
-            'password'=>bcrypt('1234567')
+            'password'=>bcrypt('1234567'),
         ]);
 
         $response = $this->postJson('/api/login', ['email'=>$user->email, 'password'=>'1234567']);

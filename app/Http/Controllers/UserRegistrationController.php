@@ -14,13 +14,13 @@ class UserRegistrationController extends Controller
         $arguments = $request->validated();
         $arguments['password'] = Hash::make($request['password']);
 
-        $user=User::create($arguments);
+        $user = User::create($arguments);
 
         $response = [
             'status'=>200,
             'message'=>'User has been added succesfully',
             'token'=>$user->createToken('app')->plainTextToken,
-            'user'=>$user
+            'user'=>$user,
         ];
 
         return response()->json($response);

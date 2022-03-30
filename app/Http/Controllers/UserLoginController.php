@@ -16,12 +16,12 @@ class UserLoginController extends Controller
         $user = User::where('email', $arguments['email'])->first();
         $response = [];
         if (isset($user)) {
-            if (Hash::check($arguments['password'],$user->password)) {
+            if (Hash::check($arguments['password'], $user->password)) {
                 $response = [
                     'status'=>200,
                     'message'=>'User logged in succesfully',
                     'token'=>$user->createToken('app')->plainTextToken,
-                    'user'=>$user
+                    'user'=>$user,
                 ];
             } else {
                 $response = ['status'=>401, 'message'=>'Invalid credentials'];
