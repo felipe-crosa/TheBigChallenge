@@ -43,7 +43,7 @@ class LoginTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function wrongCredentialsDataProvider()
+    public function wrongCredentialsDataProvider() :array
     {
         return [
             ['wrong Password'=>[
@@ -57,7 +57,7 @@ class LoginTest extends TestCase
         ];
     }
 
-    public function invalidUserDataProvider()
+    public function invalidUserDataProvider() : array
     {
         return [
             ['wrong email'=>[
