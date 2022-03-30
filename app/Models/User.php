@@ -40,4 +40,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sumbissions()
+    {
+        return $this->hasMany(Submission::class, 'patient_id', 'id');
+    }
+
+    public function patients()
+    {
+        return $this->hasMany(Submission::class, 'doctor_id', 'id');
+    }
 }

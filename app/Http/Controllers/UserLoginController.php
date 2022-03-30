@@ -16,7 +16,11 @@ class UserLoginController extends Controller
         $response = [];
         if (isset($user)) {
             if ($user->password == $arguments['password']) {
-                $response = ['status'=>200, 'message'=>'User logged in succesfully'];
+                $response = [
+                    'status'=>200,
+                    'message'=>'User logged in succesfully',
+                    'token'=>$user->createToken('app')->plainTextToken,
+                ];
             } else {
                 $response = ['status'=>401, 'message'=>'Invalid credentials'];
             }
