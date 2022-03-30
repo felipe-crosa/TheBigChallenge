@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +22,7 @@ class UserLoginController extends Controller
                     'status'=>200,
                     'message'=>'User logged in succesfully',
                     'token'=>$user->createToken('app')->plainTextToken,
-                    'user'=>$user,
+                    'user'=> new UserResource($user),
                 ];
             } else {
                 $response = ['status'=>401, 'message'=>'Invalid credentials'];
