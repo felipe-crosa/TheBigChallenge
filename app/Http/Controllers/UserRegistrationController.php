@@ -14,7 +14,7 @@ class UserRegistrationController extends Controller
         $arguments = $request->validated();
         $arguments['password'] = Hash::make($request['password']);
 
-        User::create($arguments);
+        $user = User::create($arguments);
 
         $response = [
             'status'=>200,
