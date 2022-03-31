@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
@@ -24,7 +26,7 @@ class UserRegistrationTest extends TestCase
 
         $this->assertDatabaseHas('users', ['name' => 'Felipe', 'email' => 'felicrosa@gmail.com']);
 
-        $response->assertJson(['status'=>200, 'message'=>'User has been added succesfully']);
+        $response->assertJson(['status' => 200, 'message' => 'User has been added succesfully']);
     }
 
     public function test_password_is_encrypted_in_database()
@@ -37,7 +39,7 @@ class UserRegistrationTest extends TestCase
         ];
         $this->postJson('/api/register', $data);
 
-        $this->assertDatabaseMissing('users', ['password'=>'12345678']);
+        $this->assertDatabaseMissing('users', ['password' => '12345678']);
     }
 
     /**
@@ -49,47 +51,54 @@ class UserRegistrationTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_user_cant_register_if_already_logged_in()
+    {
+        Sanctum::actingAs(User::factory()->create());
+
+        $this->postJson('/api/register')->assertStatus(302);
+    }
+
     public function invalidUserDataProvider(): array
     {
         return [
-            ['no Name'=>[
+            ['no Name' => [
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['no Password'=>[
+            ['no Password' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
             ]],
-            ['no Password Confirmation'=>[
+            ['no Password Confirmation' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
             ]],
-            ['wrong Password Confirmation'=>[
+            ['wrong Password Confirmation' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
                 'password_confirmation' => '1234545678',
             ]],
-            ['no email'=>[
+            ['no email' => [
                 'name' => 'Felipe',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['invalid email'=>[
+            ['invalid email' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosamail.com',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['invalid name'=>[
+            ['invalid name' => [
                 'name' => 'Fel4ipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['shortPassword'=>[
+            ['shortPassword' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '1454',
