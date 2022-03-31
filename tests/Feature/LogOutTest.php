@@ -11,12 +11,9 @@ class LogOutTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_succesfully_logs_out()
+    public function test_user_can_succesfully_log_out()
     {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
+        Sanctum::actingAs(User::factory()->create());
 
         $response = $this->postJson('/api/logout');
         $response->assertStatus(200);
