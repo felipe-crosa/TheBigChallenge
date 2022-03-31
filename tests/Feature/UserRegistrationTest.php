@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
@@ -47,6 +49,16 @@ class UserRegistrationTest extends TestCase
     {
         $response = $this->postJson('/api/register', $user);
         $response->assertStatus(422);
+    }
+
+    public function test_user_cant_register_if_already_logged_in()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
+        $this->postJson('/api/register')->assertStatus(302);
     }
 
     public function invalidUserDataProvider(): array

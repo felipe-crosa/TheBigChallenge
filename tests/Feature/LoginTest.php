@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -42,6 +43,16 @@ class LoginTest extends TestCase
         $response = $this->postJson('/api/login', $user);
 
         $response->assertStatus(422);
+    }
+
+    public function test_cant_log_in_if_already_logged_in()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
+        $this->postJson('/api/login')->assertStatus(302);
     }
 
     public function wrongCredentialsDataProvider() :array
