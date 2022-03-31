@@ -18,3 +18,9 @@ Route::middleware('guest')->post('/register', \App\Http\Controllers\UserRegistra
 Route::middleware('guest')->post('/login', \App\Http\Controllers\UserLoginController::class);
 
 Route::middleware('auth:sanctum')->post('/logout', \App\Http\Controllers\UserLogOutController::class);
+
+Route::group(['middleware' => ['role:doctor']], function () {
+});
+
+Route::group(['middleware' => ['role:patient']], function () {
+});
