@@ -47,10 +47,7 @@ class LoginTest extends TestCase
 
     public function test_cant_log_in_if_already_logged_in()
     {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
+        Sanctum::actingAs(User::factory()->create());
 
         $response = $this->postJson('/api/login');
         $response->assertStatus(302);

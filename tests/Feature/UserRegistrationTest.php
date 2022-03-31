@@ -53,10 +53,7 @@ class UserRegistrationTest extends TestCase
 
     public function test_user_cant_register_if_already_logged_in()
     {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
+        Sanctum::actingAs(User::factory()->create());
 
         $this->postJson('/api/register')->assertStatus(302);
     }
