@@ -52,7 +52,8 @@ class LoginTest extends TestCase
             ['*']
         );
 
-        $this->postJson('/api/login')->assertStatus(302);
+        $response = $this->postJson('/api/login');
+        $response->assertStatus(302);
     }
 
     public function wrongCredentialsDataProvider() :array

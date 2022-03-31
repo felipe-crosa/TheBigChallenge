@@ -17,4 +17,4 @@ Route::middleware('guest')->post('/register', \App\Http\Controllers\UserRegistra
 
 Route::middleware('guest')->post('/login', \App\Http\Controllers\UserLoginController::class);
 
-Route::middleware('auth:sanctum')->get('/logout', \App\Http\Controllers\UserLogOutController::class);
+Route::middleware('auth:sanctum')->post('/logout', \App\Http\Controllers\UserLogOutController::class);
