@@ -17,7 +17,7 @@ class LogOutTest extends TestCase
 
         $response = $this->postJson('/api/logout');
         $response->assertStatus(200);
-        $response->assertJson(['status'=>200, 'message'=>'User logged out succesfully']);
+        $response->assertJson(['status' => 200, 'message' => 'User logged out succesfully']);
     }
 
     public function test_only_logged_in_users_can_access_route()
