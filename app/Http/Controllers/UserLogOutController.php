@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserLogOutController extends Controller
 {
-    public function __invoke() : JsonResponse
+    public function __invoke(): JsonResponse
     {
         Auth::user()->tokens()->delete();
 
         return response()->json([
-            'status'=>200,
-            'message'=>'User logged out succesfully',
+            'status' => 200,
+            'message' => 'User logged out succesfully',
         ]);
     }
 }

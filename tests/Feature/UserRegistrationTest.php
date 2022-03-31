@@ -26,7 +26,7 @@ class UserRegistrationTest extends TestCase
 
         $this->assertDatabaseHas('users', ['name' => 'Felipe', 'email' => 'felicrosa@gmail.com']);
 
-        $response->assertJson(['status'=>200, 'message'=>'User has been added succesfully']);
+        $response->assertJson(['status' => 200, 'message' => 'User has been added succesfully']);
     }
 
     public function test_password_is_encrypted_in_database()
@@ -39,7 +39,7 @@ class UserRegistrationTest extends TestCase
         ];
         $this->postJson('/api/register', $data);
 
-        $this->assertDatabaseMissing('users', ['password'=>'12345678']);
+        $this->assertDatabaseMissing('users', ['password' => '12345678']);
     }
 
     /**
@@ -61,44 +61,44 @@ class UserRegistrationTest extends TestCase
     public function invalidUserDataProvider(): array
     {
         return [
-            ['no Name'=>[
+            ['no Name' => [
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['no Password'=>[
+            ['no Password' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
             ]],
-            ['no Password Confirmation'=>[
+            ['no Password Confirmation' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
             ]],
-            ['wrong Password Confirmation'=>[
+            ['wrong Password Confirmation' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
                 'password_confirmation' => '1234545678',
             ]],
-            ['no email'=>[
+            ['no email' => [
                 'name' => 'Felipe',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['invalid email'=>[
+            ['invalid email' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosamail.com',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['invalid name'=>[
+            ['invalid name' => [
                 'name' => 'Fel4ipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '12345678',
                 'password_confirmation' => '12345678',
             ]],
-            ['shortPassword'=>[
+            ['shortPassword' => [
                 'name' => 'Felipe',
                 'email' => 'felicrosa@gmail.com',
                 'password' => '1454',
