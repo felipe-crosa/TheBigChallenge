@@ -23,4 +23,5 @@ Route::group(['middleware' => ['role:doctor']], function () {
 });
 
 Route::group(['middleware' => ['role:patient']], function () {
+    Route::patch('/updatePatient', \App\Http\Controllers\UpdatePatientInformationController::class);
 });

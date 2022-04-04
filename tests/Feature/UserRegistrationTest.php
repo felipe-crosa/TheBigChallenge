@@ -42,6 +42,22 @@ class UserRegistrationTest extends TestCase
         $this->assertDatabaseMissing('users', ['password' => '12345678']);
     }
 
+    public function test_patient_is_created()
+    {
+        (new RolesSeeder)->run();
+        $data = [
+            'name' => 'Felipe',
+            'email' => 'felicrosa@gmail.com',
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
+            'role' => 'patient',
+        ];
+        $response = $this->postJson('/api/register', $data);
+        $response->assertSuccessful();
+
+        $this->assertDatabaseCount('patients', 1);
+    }
+
     /**
      * @dataProvider  invalidUserDataProvider
      */
