@@ -6,6 +6,8 @@ use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+
 
 class UserRegistrationController extends Controller
 {
@@ -16,7 +18,7 @@ class UserRegistrationController extends Controller
 
         $user = User::create($arguments);
         $user->assignRole($arguments['role']);
-
+        event(new Registered($user));
         $response = [
             'status'=>200,
             'message'=>'User has been added succesfully',
