@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\JsonResponse;
 
 class VerifyEmailController extends Controller
 {
-    public function __invoke(EmailVerificationRequest $request)
+    public function __invoke(EmailVerificationRequest $request) : JsonResponse
     {
         $request->fulfill();
 

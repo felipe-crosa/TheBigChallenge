@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ResendVerificationLinkController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request) : JsonResponse
     {
         $request->user()->sendEmailVerificationNotification();
 
