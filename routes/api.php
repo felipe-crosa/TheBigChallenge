@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->post('/logout', \App\Http\Controllers\UserLog
 
 Route::get('/email/verify/{id}/{hash}', \App\Http\Controllers\VerifyEmailController::class)->name('verification.verify');
 
-Route::post('/email/verification-notification', \App\Http\Controllers\ResendVerificationLinkController::class);
+Route::middleware('auth:sanctum')->post('/email/verification-notification', \App\Http\Controllers\ResendVerificationLinkController::class);
 
 Route::group(['middleware' => ['role:doctor']], function () {
 });
