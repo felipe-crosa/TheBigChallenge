@@ -16,10 +16,10 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->double('height')->nullable();
-            $table->date('date of birth')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->double('weight')->nullable();
             $table->string('gender')->nullable();
-            $table->string('medical conditions')->nullable();
+            $table->string('medical_conditions')->nullable();
             $table->string('allergies')->nullable();
             $table->foreignId('user_id')->unique();
         });

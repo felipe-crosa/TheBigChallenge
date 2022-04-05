@@ -22,11 +22,11 @@ class UpdatePatientInformationTest extends TestCase
         Sanctum::actingAs($user);
         $data = [
             'height' => 172.4,
-            'date of birth' => '2002-06-10',
+            'date_of_birth' => '2002-06-10',
             'weight' => 70.4,
             'gender' => 'male',
             'allergies' => 'Alergic to nuts',
-            'medical conditions' => 'Asmatic',
+            'medical_conditions' => 'Asmatic',
         ];
         $this->patchJson('/api/updatePatient', $data)->assertSuccessful();
     }
@@ -39,11 +39,11 @@ class UpdatePatientInformationTest extends TestCase
         Sanctum::actingAs($user);
         $data = [
             'height' => 172.4,
-            'date of birth' => '2002-06-10',
+            'date_of_birth' => '2002-06-10',
             'weight' => 70.4,
             'gender' => 'male',
             'allergies' => 'Alergic to nuts',
-            'medical conditions' => 'Asmatic',
+            'medical_conditions' => 'Asmatic',
         ];
         $this->patchJson('/api/updatePatient', $data)->assertForbidden();
     }
@@ -65,48 +65,48 @@ class UpdatePatientInformationTest extends TestCase
     {
         return [
             ['no height' => [
-                'date of birth' => '2002-06-10',
+                'date_of_birth' => '2002-06-10',
                 'weight' => 70.4,
                 'gender' => 'male',
                 'allergies' => 'Alergic to nuts',
-                'medical conditions' => 'Asmatic',
+                'medical_conditions' => 'Asmatic',
             ]],
             ['negtive weight' => [
                 'height' => 172.4,
-                'date of birth' => '2025-06-10',
+                'date_of_birth' => '2025-06-10',
                 'weight' => -70.4,
                 'gender' => 'male',
                 'allergies' => 'Alergic to nuts',
-                'medical conditions' => 'Asmatic',
+                'medical_conditions' => 'Asmatic',
             ]],
             ['not male nor female' => [
                 'height' => 172.4,
-                'date of birth' => '2002-06-10',
+                'date_of_birth' => '2002-06-10',
                 'weight' => 70.4,
                 'gender' => 'other',
                 'allergies' => 'Alergic to nuts',
-                'medical conditions' => 'Asmatic',
+                'medical_conditions' => 'Asmatic',
             ]],
             ['no gender' => [
                 'height' => 172.4,
-                'date of birth' => '2002-06-10',
+                'date_of_birth' => '2002-06-10',
                 'weight' => 70.4,
                 'allergies' => 'Alergic to nuts',
-                'medical conditions' => 'Asmatic',
+                'medical_conditions' => 'Asmatic',
             ]],
             ['no date of birth' => [
                 'height' => 172.4,
                 'weight' => 70.4,
                 'gender' => 'male',
                 'allergies' => 'Alergic to nuts',
-                'medical conditions' => 'Asmatic',
+                'medical_conditions' => 'Asmatic',
             ]],
             ['no weight' => [
                 'height' => 172.4,
-                'date of birth' => '2002-06-10',
+                'date_of_birth' => '2002-06-10',
                 'gender' => 'male',
                 'allergies' => 'Alergic to nuts',
-                'medical conditions' => 'Asmatic',
+                'medical_conditions' => 'Asmatic',
             ]],
 
         ];

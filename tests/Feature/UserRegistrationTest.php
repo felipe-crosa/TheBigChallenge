@@ -74,6 +74,20 @@ class UserRegistrationTest extends TestCase
         $this->postJson('/api/register')->assertStatus(302);
     }
 
+    public function test_user_cant_register_with_existing_email()
+    {
+        (new RolesSeeder)->run();
+        $user = User::factory()->create();
+        $data = [
+            'name' => 'Felipe',
+            'email' => $user->email,
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
+            'role' => 'patient',
+        ];
+        $this->postJson('api/register', $data)->assertStatus(422);
+    }
+
     public function invalidUserDataProvider(): array
     {
         return [

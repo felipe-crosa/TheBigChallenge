@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRegistrationRequest;
-use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -23,7 +22,7 @@ class UserRegistrationController extends Controller
             'message' => 'User has been added succesfully',
         ];
 
-        ($arguments['role'] == 'patient') ? Patient::create(['user_id' => $user->id]) : false /* Here goes the creation of doctor*/;
+        ($arguments['role'] == 'patient') ? $user->patient()->create() : 'The user is a doctor';
 
         return response()->json($response);
     }
