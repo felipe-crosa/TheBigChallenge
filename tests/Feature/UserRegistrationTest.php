@@ -4,7 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use Illuminate\Support\Facades\Notification;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -17,6 +20,8 @@ class UserRegistrationTest extends TestCase
      */
     public function test_user_is_registered_on_database($user)
     {
+        Notification::fake();
+
         (new RolesSeeder)->run();
 
         $response = $this->postJson('/api/register', $user);
@@ -26,6 +31,10 @@ class UserRegistrationTest extends TestCase
         $this->assertDatabaseHas('users', ['name' => 'Felipe', 'email' => 'felicrosa@gmail.com']);
 
         $response->assertJson(['status' => 200, 'message' => 'User has been added succesfully']);
+
+        Notification::assertSentTo(User::first(),VerifyEmail::class);
+
+
     }
 
     public function test_password_is_encrypted_in_database()
@@ -57,6 +66,7 @@ class UserRegistrationTest extends TestCase
 
         $this->postJson('/api/register')->assertStatus(302);
     }
+
 
     public function invalidUserDataProvider(): array
     {
