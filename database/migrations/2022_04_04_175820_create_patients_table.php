@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('gender')->nullable();
             $table->string('medical conditions')->nullable();
             $table->string('allergies')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->unique();
         });
     }
 
