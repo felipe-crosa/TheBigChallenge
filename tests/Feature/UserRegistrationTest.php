@@ -32,18 +32,6 @@ class UserRegistrationTest extends TestCase
         $response->assertJson(['status' => 200, 'message' => 'User has been added succesfully']);
 
         Notification::assertSentTo(User::first(), VerifyEmail::class);
-    }
-
-    public function test_password_is_encrypted_in_database()
-    {
-        $data = [
-            'name' => 'Felipe',
-            'email' => 'felicrosa@gmail.com',
-            'password' => '12345678',
-            'password_confirmation' => '12345678',
-            'role' => 'doctor',
-        ];
-        $this->postJson('/api/register', $data);
 
         $this->assertDatabaseMissing('users', ['password' => '12345678']);
     }
@@ -53,8 +41,10 @@ class UserRegistrationTest extends TestCase
      */
     public function test_user_cant_register_with_invalid_data($user)
     {
+        Notification::fake();
         $response = $this->postJson('/api/register', $user);
         $response->assertStatus(422);
+        Notification::assertNothingSent();
     }
 
     public function test_user_cant_register_if_already_logged_in()
