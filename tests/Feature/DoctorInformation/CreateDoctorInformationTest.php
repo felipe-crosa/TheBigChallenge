@@ -29,6 +29,7 @@ class CreateDoctorInformationTest extends TestCase
             'status' => 200,
             'message' => 'Information created successfully',
         ]);
+        $this->assertDatabaseHas('doctor_information', ['speciality'=>'Pediatrics', 'institution'=>'The British Hospital']);
     }
 
     /**

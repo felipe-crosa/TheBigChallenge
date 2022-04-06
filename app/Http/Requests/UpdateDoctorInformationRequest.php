@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateDoctorInformationRequest extends FormRequest
 {
@@ -11,20 +12,24 @@ class UpdateDoctorInformationRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
-        return false;
+        return Auth::user()->hasRole('doctor');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules():array
     {
         return [
-            //
+            'speciality' => ['required', 'regex:/^[\pL\s\-]+$/u', 'max:50'],
+            'institution' => ['required', 'max:50'],
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'institution' => ucwords($this['institution']),
+            'speciality' => ucwords($this['speciality']),
+        ]);
     }
 }
