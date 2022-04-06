@@ -22,7 +22,11 @@ class UserRegistrationController extends Controller
             'message' => 'User has been added succesfully',
         ];
 
-        ($arguments['role'] == 'patient') ? $user->patient()->create() : 'The user is a doctor';
+        match ($arguments['role']) {
+            // 'doctor' => 'it is a doctor',
+            'patient' => $user->patient()->create(),
+            default => NULL
+        };
 
         return response()->json($response);
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Patient;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,19 +19,29 @@ class GetPatientInformationTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $user->assignRole('patient');
-        $data = [
-            'height' => 172.4,
-            'date_of_birth' => '2002-06-10',
-            'weight' => 70.4,
-            'gender' => 'male',
-            'allergies' => 'Alergic to nuts',
-            'medical_conditions' => 'Asmatic',
-        ];
 
-        $user->patient()->create($data);
+        $patient = Patient::factory()->create(['user_id' => $user->id]);
+
         $response = $this->getJson('api/getPatientInformation');
         $response->assertSuccessful();
 
-        $response->assertJson($data);
+        $response->assertJson([
+            'height' => $patient->height,
+            'weight' => $patient->weight,
+            'gender' => $patient->gender,
+            'date_of_birth' => $patient->date_of_birth,
+            'allergies' => $patient->allergies,
+            'medical_conditions' => $patient->medical_conditions,
+        ]);
+    }
+
+    public function test_user_without_patient_data_cant_access()
+    {
+        (new RolesSeeder())->run();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $user->assignRole('patient');
+        $response = $this->getJson('api/getPatientInformation');
+        $response->assertForbidden();
     }
 }
