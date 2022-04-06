@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRegistrationController extends Controller
 {
-    public function __invoke(UserRegistrationRequest $request) : JsonResponse
+    public function __invoke(UserRegistrationRequest $request): JsonResponse
     {
         $arguments = $request->validated();
         $arguments['password'] = Hash::make($request['password']);
@@ -19,8 +19,8 @@ class UserRegistrationController extends Controller
         $user->assignRole($arguments['role']);
         event(new Registered($user));
         $response = [
-            'status'=>200,
-            'message'=>'User has been added succesfully',
+            'status' => 200,
+            'message' => 'User has been added succesfully',
         ];
 
         return response()->json($response);
