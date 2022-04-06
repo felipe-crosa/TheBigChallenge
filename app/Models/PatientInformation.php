@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PatientInformation extends Model
 {
     protected $table = 'patients';
+
     protected $guarded = ['id'];
     use HasFactory;
 
