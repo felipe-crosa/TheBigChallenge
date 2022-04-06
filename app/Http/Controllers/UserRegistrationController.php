@@ -24,7 +24,7 @@ class UserRegistrationController extends Controller
 
         match ($arguments['role']) {
             // 'doctor' => 'it is a doctor',
-            'patient' => $user->patient()->create(),
+            'patient' => $user->patient_information()->create(),
             default => NULL
         };
 

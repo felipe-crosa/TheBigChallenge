@@ -53,8 +53,8 @@ class User extends Authenticatable
         return $this->hasMany(Submission::class, 'doctor_id', 'id');
     }
 
-    public function patient() : HasOne
+    public function patient_information() : HasOne
     {
-        return $this->hasOne(Patient::class);
+        return $this->hasOne(PatientInformation::class);
     }
 }

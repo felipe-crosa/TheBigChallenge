@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Patient extends Model
+class PatientInformation extends Model
 {
+    protected $table = 'patients';
     protected $guarded = ['id'];
     use HasFactory;
 

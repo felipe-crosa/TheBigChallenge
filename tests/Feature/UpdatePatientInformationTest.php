@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Patient;
+use App\Models\PatientInformation;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +17,7 @@ class UpdatePatientInformationTest extends TestCase
     {
         (new RolesSeeder)->run();
         $user = User::factory()->create();
-        $patient = Patient::create(['user_id' => $user->id]);
+        $patient = PatientInformation::create(['user_id' => $user->id]);
         $user->assignRole('patient');
         Sanctum::actingAs($user);
         $data = [
@@ -55,7 +55,7 @@ class UpdatePatientInformationTest extends TestCase
     {
         (new RolesSeeder)->run();
         $user = User::factory()->create();
-        $patient = Patient::create(['user_id' => $user->id]);
+        $patient = PatientInformation::create(['user_id' => $user->id]);
         $user->assignRole('patient');
         Sanctum::actingAs($user);
         $this->patchJson('/api/updatePatient', $data)->assertStatus(422);

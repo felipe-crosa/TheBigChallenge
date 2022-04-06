@@ -9,7 +9,7 @@ class GetPatientInformationRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return isset(Auth::user()->patient);
+        return isset(Auth::user()->patient_information);
     }
 
     public function rules(): array

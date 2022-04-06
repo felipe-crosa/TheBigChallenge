@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Patient;
+use App\Models\PatientInformation;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +20,7 @@ class GetPatientInformationTest extends TestCase
         Sanctum::actingAs($user);
         $user->assignRole('patient');
 
-        $patient = Patient::factory()->create(['user_id' => $user->id]);
+        $patient = PatientInformation::factory()->create(['user_id' => $user->id]);
 
         $response = $this->getJson('api/getPatientInformation');
         $response->assertSuccessful();
