@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePatientInformationRequest;
+use App\Http\Resources\PatientInformationResource;
 use App\Models\PatientInformation;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class UpdatePatientInformationController extends Controller
 {
-    public function __invoke(UpdatePatientInformationRequest $request) : JsonResponse
+    public function __invoke(UpdatePatientInformationRequest $request) : PatientInformationResource
     {
-        PatientInformation::where('user_id', Auth::id())->first()->update($request->validated());
+        $patient = PatientInformation::where('user_id', Auth::id())->first();
+        $patient->update($request->validated());
 
-        return response()->json(['status'=>200, 'message'=>'Information updated successfully']);
+        return (new PatientInformationResource($patient))
+            ->additional([
+                'status' => 200,
+                'message' => 'Information updated successfully',
+            ]);
     }
 }

@@ -11,6 +11,6 @@ class GetPatientInformationController extends Controller
 {
     public function __invoke(GetPatientInformationRequest $request) : JsonResponse
     {
-        return response()->json((new PatientInformationResource(Auth::user()->patient_information)));
+        return response()->json((new PatientInformationResource(Auth::user()->patientInformation)));
     }
 }

@@ -22,12 +22,6 @@ class UserRegistrationController extends Controller
             'message' => 'User has been added succesfully',
         ];
 
-        match ($arguments['role']) {
-            // 'doctor' => 'it is a doctor',
-            'patient' => $user->patient_information()->create(),
-            default => NULL
-        };
-
         return response()->json($response);
     }
 }

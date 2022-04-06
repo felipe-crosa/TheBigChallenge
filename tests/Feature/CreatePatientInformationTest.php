@@ -9,56 +9,79 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-class UpdatePatientInformationTest extends TestCase
+class CreatePatientInformationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_patient_information_is_updated_successfully()
+    public function test_patient_information_is_created()
     {
-        (new RolesSeeder)->run();
+        (new RolesSeeder())->run();
         $user = User::factory()->create();
-        $patient = PatientInformation::factory()->create(['user_id' => $user->id]);
         $user->assignRole('patient');
         Sanctum::actingAs($user);
         $data = [
-            'height' => 172.4,
+            'height'=>40,
             'date_of_birth' => '2002-06-10',
             'weight' => 70.4,
             'gender' => 'male',
             'allergies' => 'Alergic to nuts',
             'medical_conditions' => 'Asmatic',
         ];
-        $this->patchJson('/api/updatePatientInformation', $data)->assertSuccessful();
-    }
 
-    public function test_only_patients_can_update_their_information()
-    {
-        (new RolesSeeder)->run();
-        $user = User::factory()->create();
-        $user->assignRole('doctor');
-        Sanctum::actingAs($user);
-        $data = [
-            'height' => 172.4,
-            'date_of_birth' => '2002-06-10',
-            'weight' => 70.4,
-            'gender' => 'male',
-            'allergies' => 'Alergic to nuts',
-            'medical_conditions' => 'Asmatic',
-        ];
-        $this->patchJson('/api/updatePatientInformation', $data)->assertForbidden();
+        $response = $this->postJson('/api/createPatientInformation', $data);
+        $this->assertDatabaseHas('patients', $data);
+        $response->assertSuccessful();
+        $response->assertJson(['status'=>200, 'message'=>'Information has been successfully created']);
     }
 
     /**
      * @dataProvider invalidPatientInformationDataProvider
      */
-    public function test_invalid_patient_data($data)
+    public function test_cant_create_patient_information_with_invalid_data($data)
     {
-        (new RolesSeeder)->run();
+        (new RolesSeeder())->run();
         $user = User::factory()->create();
-        $patient = PatientInformation::factory()->create(['user_id' => $user->id]);
         $user->assignRole('patient');
         Sanctum::actingAs($user);
-        $this->patchJson('/api/updatePatientInformation', $data)->assertStatus(422);
+        $response = $this->postJson('/api/createPatientInformation', $data);
+        $response->assertStatus(422);
+    }
+
+    public function test_only_patients_can_create()
+    {
+        (new RolesSeeder())->run();
+        $user = User::factory()->create();
+        $user->assignRole('doctor');
+        Sanctum::actingAs($user);
+        $data = [
+            'height'=>40,
+            'date_of_birth' => '2002-06-10',
+            'weight' => 70.4,
+            'gender' => 'male',
+            'allergies' => 'Alergic to nuts',
+            'medical_conditions' => 'Asmatic',
+        ];
+        $response = $this->postJson('/api/createPatientInformation', $data);
+        $response->assertForbidden();
+    }
+
+    public function test_users_with_patient_information_cant_create_again()
+    {
+        (new RolesSeeder())->run();
+        $user = User::factory()->create();
+        $user->assignRole('doctor');
+        PatientInformation::factory()->create(['user_id'=>$user->id]);
+        Sanctum::actingAs($user);
+        $data = [
+            'height'=>40,
+            'date_of_birth' => '2002-06-10',
+            'weight' => 70.4,
+            'gender' => 'male',
+            'allergies' => 'Alergic to nuts',
+            'medical_conditions' => 'Asmatic',
+        ];
+        $response = $this->postJson('/api/createPatientInformation', $data);
+        $response->assertForbidden();
     }
 
     public function invalidPatientInformationDataProvider()
