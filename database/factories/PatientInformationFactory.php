@@ -22,8 +22,8 @@ class PatientInformationFactory extends Factory
             'date_of_birth' => $this->faker->date(),
             'weight' => $this->faker->randomFloat(2, 1, 500),
             'gender' => $this->faker->randomElement(['male', 'female']),
-            'allergies' => $this->faker->paragraph,
-            'medical_conditions' =>$this->faker->paragraph,
+            'allergies' => $this->faker->text(255),
+            'medical_conditions' =>$this->faker->text(255),
             'user_id'=>User::factory()->create(),
         ];
     }

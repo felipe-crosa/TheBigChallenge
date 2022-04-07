@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\PatientInformation;
 
 use App\Models\PatientInformation;
 use App\Models\User;
@@ -26,12 +26,14 @@ class GetPatientInformationTest extends TestCase
         $response->assertSuccessful();
 
         $response->assertJson([
-            'height' => $patient->height,
-            'weight' => $patient->weight,
-            'gender' => $patient->gender,
-            'date_of_birth' => $patient->date_of_birth,
-            'allergies' => $patient->allergies,
-            'medical_conditions' => $patient->medical_conditions,
+            'data'=>[
+                'height' => str($patient->height),
+                'date_of_birth' => $patient->date_of_birth,
+                'weight' => str($patient->weight),
+                'gender' => $patient->gender,
+                'allergies' => $patient->allergies,
+                'medical_conditions' => $patient->medical_conditions,
+                ],
         ]);
     }
 
