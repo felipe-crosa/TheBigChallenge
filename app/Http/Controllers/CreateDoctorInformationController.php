@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateDoctorInformationController extends Controller
 {
-    public function __invoke(CreateDoctorInformationRequest $request)
+    public function __invoke(CreateDoctorInformationRequest $request): DoctorInformationResource
     {
         $doctorInformation = Auth::user()->doctorInformation()->create($request->validated());
 

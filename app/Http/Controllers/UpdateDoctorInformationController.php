@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UpdateDoctorInformationController extends Controller
 {
-    public function __invoke(UpdateDoctorInformationRequest $request)
+    public function __invoke(UpdateDoctorInformationRequest $request) : DoctorInformationResource
     {
         $doctor = DoctorInformation::where('user_id', Auth::id())->first();
         $doctor->update($request->validated());
