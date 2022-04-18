@@ -33,4 +33,5 @@ Route::group(['middleware' => ['role:patient']], function () {
     Route::post('/createPatientInformation', \App\Http\Controllers\CreatePatientInformationController::class);
     Route::patch('/updatePatientInformation', \App\Http\Controllers\UpdatePatientInformationController::class);
     Route::get('/getPatientInformation', \App\Http\Controllers\GetPatientInformationController::class);
+    Route::post('/createSubmission', \App\Http\Controllers\CreateSubmissionController::class);
 });
