@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('diagnosis')->nullable();
             $table->string('symptoms');
             $table->string('observations')->nullable();
+            $table->string('speciality');
         });
     }
 
