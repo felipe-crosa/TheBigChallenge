@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Submissions;
 
+use App\Models\DoctorInformation;
 use App\Models\PatientInformation;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
@@ -31,7 +32,19 @@ class CreateSubmissionTest extends TestCase
         $response = $this->postJson('/api/createSubmission', $data);
         $response->assertSuccessful();
         $this->assertDatabaseCount('submissions', 1);
-        $response->assertJson(['data' => $data, 'message' => 'Submission created successfully']);
+        $response->assertJson(['message' => 'Submission created successfully']);
+    }
+
+    public function test_only_patients_can_create()
+    {
+        (new RolesSeeder())->run();
+        $doctor = User::factory()->create();
+        $doctor->assignRole('doctor');
+        DoctorInformation::factory()->create(['user_id' => $doctor->id]);
+        Sanctum::actingAs($doctor);
+
+        $response = $this->postJson('/api/createSubmission');
+        $response->assertForbidden();
     }
 
     /**
