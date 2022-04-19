@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function sumbissions(): HasManygit 
+    public function sumbissions(): HasManygit
     {
         return $this->hasMany(Submission::class, 'patient_id', 'id');
     }
