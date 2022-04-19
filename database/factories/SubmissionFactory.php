@@ -18,10 +18,10 @@ class SubmissionFactory extends Factory
     public function definition()
     {
         return [
-            'patient_id'=>User::factory()->create(),
-            'doctor_id'=>User::factory()->create(),
-            'symptoms'=>$this->faker->text,
-            'observations'=>$this->faker->text,
+            'patient_id' => User::factory()->create(),
+            'symptoms' => $this->faker->text,
+            'observations' => $this->faker->text,
+            'speciality' => $this->faker->word,
         ];
     }
 }
