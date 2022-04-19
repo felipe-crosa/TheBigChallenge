@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/email/verification-notification', \App\Http\Controllers\ResendVerificationLinkController::class);
     Route::middleware('auth:sanctum')->post('/logout', \App\Http\Controllers\UserLogOutController::class);
     Route::get('/submissions/{submission}', \App\Http\Controllers\GetSubmissionController::class);
+    Route::get('/submissions', \App\Http\Controllers\GetAllSubmissionsController::class);
 });
 
 Route::group(['middleware' => ['role:doctor']], function () {

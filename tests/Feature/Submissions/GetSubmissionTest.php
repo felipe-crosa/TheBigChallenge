@@ -47,10 +47,7 @@ class GetSubmissionTest extends TestCase
         Sanctum::actingAs($user);
 
         $response = $this->getJson("/api/submissions/{$submission->id}");
-        $response->assertSuccessful();
-        $response->assertJson([
-            'status' => 403,
-        ]);
+        $response->assertStatus(404);
     }
 
     public function test_doctor_can_view_if_submission_not_assigned()
@@ -116,9 +113,6 @@ class GetSubmissionTest extends TestCase
         ]);
         $response = $this->getJson("/api/submissions/{$submission->id}");
 
-        $response->assertSuccessful();
-        $response->assertJson([
-            'status' => 403,
-        ]);
+        $response->assertStatus(404);
     }
 }

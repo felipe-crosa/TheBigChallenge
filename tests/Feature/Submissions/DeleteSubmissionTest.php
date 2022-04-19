@@ -31,12 +31,11 @@ class DeleteSubmissionTest extends TestCase
     {
         (new RolesSeeder())->run();
         $submission = Submission::factory()->create();
-
         $patient = User::factory()->create();
         $patient->assignRole('patient');
         Sanctum::actingAs($patient);
         $response = $this->deleteJson("/api/submissions/{$submission->id}/delete");
-        $response->assertJson(['message' => 'You dont own this submission']);
+        $response->assertStatus(404);
     }
 
     public function test_deleting_non_existing_submission()
