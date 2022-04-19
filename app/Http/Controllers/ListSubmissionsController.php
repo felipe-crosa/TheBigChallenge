@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SubmissionResourceCollection;
 use App\Models\Submission;
 
-class GetAllSubmissionsController extends Controller
+class ListSubmissionsController extends Controller
 {
     public function __invoke()
     {
