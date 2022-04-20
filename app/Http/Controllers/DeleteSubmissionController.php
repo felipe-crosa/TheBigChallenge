@@ -3,33 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Submission;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
-class DeleteSubmissionController extends Controller
+class DeleteSubmissionController
 {
     public function __invoke(Submission $submission): JsonResponse
     {
-        $response = [
+        Auth::user()->can('delete', $submission);
+        $submission->delete();
+
+        return response()->json([
             'status' => 200,
             'message' => 'The submission has been deleted',
-        ];
-
-        try {
-            $this->authorize('delete', $submission);
-            $submission->delete();
-        } catch (AuthorizationException $authorizationException) {
-            $response = [
-                'status' => 403,
-                'message' => 'You dont own this submission',
-            ];
-        } catch (\Exception $exception) {
-            $response = [
-                'status' => 409,
-                'message' => 'Could not delete submission',
-            ];
-        }
-
-        return response()->json($response);
+        ]);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class UserLogOutController extends Controller
+class UserLogOutController
 {
     public function __invoke(): JsonResponse
     {

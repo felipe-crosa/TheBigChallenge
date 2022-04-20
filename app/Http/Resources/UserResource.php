@@ -24,6 +24,9 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'patient_information' => new PatientInformationResource($this->whenLoaded('patientInformation')),
+            'doctor_information' => new DoctorInformationResource($this->whenLoaded('doctorInformation')),
+            'role' => $this->when(boolval($this->roles), $this->roles->pluck('name')),
         ];
     }
 }

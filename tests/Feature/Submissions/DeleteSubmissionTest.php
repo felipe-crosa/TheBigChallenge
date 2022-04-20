@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Submissions;
 
+use App\Models\PatientInformation;
 use App\Models\Submission;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
@@ -18,6 +19,7 @@ class DeleteSubmissionTest extends TestCase
         (new RolesSeeder())->run();
         $patient = User::factory()->create();
         $patient->assignRole('patient');
+        PatientInformation::factory()->create(['user_id' => $patient->id]);
         $submission = Submission::factory()->create([
             'patient_id' => $patient->id,
         ]);
@@ -31,12 +33,11 @@ class DeleteSubmissionTest extends TestCase
     {
         (new RolesSeeder())->run();
         $submission = Submission::factory()->create();
-
         $patient = User::factory()->create();
         $patient->assignRole('patient');
         Sanctum::actingAs($patient);
         $response = $this->deleteJson("/api/submissions/{$submission->id}/delete");
-        $response->assertJson(['message' => 'You dont own this submission']);
+        $response->assertStatus(404);
     }
 
     public function test_deleting_non_existing_submission()

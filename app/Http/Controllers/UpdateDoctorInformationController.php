@@ -7,10 +7,12 @@ use App\Http\Resources\DoctorInformationResource;
 use App\Models\DoctorInformation;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateDoctorInformationController extends Controller
+class UpdateDoctorInformationController
 {
     public function __invoke(UpdateDoctorInformationRequest $request) : DoctorInformationResource
     {
+        Auth::user()->can('update', DoctorInformation::class);
+
         $doctor = DoctorInformation::where('user_id', Auth::id())->first();
         $doctor->update($request->validated());
 

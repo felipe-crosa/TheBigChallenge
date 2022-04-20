@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\DoctorInformation;
-use App\Models\PatientInformation;
 use App\Models\Submission;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,17 +12,20 @@ class SubmissionResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $patient = PatientInformation::find($this->patient_id);
-        $doctor = $this->doctor_id;
+        $doctor = $this->doctor;
         if ($doctor) {
-            $doctor = DoctorInformation::find($this->doctor_id);
-            $doctor = new DoctorInformationResource($doctor);
+            $doctor->load('doctorInformation');
+        }
+
+        $patient = $this->patient;
+        if ($patient) {
+            $patient->load('patientInformation');
         }
 
         return [
             'id' => $this->id,
-            'patient' => new PatientInformationResource($patient),
-            'doctor' => $doctor,
+            'patient' => $this->when(boolval($this->patient_id), new UserResource($patient)),
+            'doctor' => $this->when(boolval($this->doctor_id), new UserResource($doctor)),
             'symptoms' => $this->symptoms,
             'observations' => $this->observations,
             'diagnosis' => $this->diagnosis,

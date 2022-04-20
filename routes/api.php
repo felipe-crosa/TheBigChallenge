@@ -13,15 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest')->post('/register', \App\Http\Controllers\UserRegistrationController::class);
-
-Route::middleware('guest')->post('/login', \App\Http\Controllers\UserLoginController::class);
-
-Route::middleware('auth:sanctum')->post('/logout', \App\Http\Controllers\UserLogOutController::class);
-
 Route::get('/email/verify/{id}/{hash}', \App\Http\Controllers\VerifyEmailController::class)->name('verification.verify');
 
-Route::middleware('auth:sanctum')->post('/email/verification-notification', \App\Http\Controllers\ResendVerificationLinkController::class);
+Route::group(['middleware' => 'guest'], function () {
+    Route::post('/register', \App\Http\Controllers\UserRegistrationController::class);
+    Route::post('/login', \App\Http\Controllers\UserLoginController::class);
+});
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/email/verification-notification', \App\Http\Controllers\ResendVerificationLinkController::class);
+    Route::middleware('auth:sanctum')->post('/logout', \App\Http\Controllers\UserLogOutController::class);
+    Route::get('/submissions/{submission}', \App\Http\Controllers\GetSubmissionController::class);
+    Route::get('/submissions', \App\Http\Controllers\ListSubmissionsController::class);
+});
 
 Route::group(['middleware' => ['role:doctor']], function () {
     Route::post('/createDoctorInformation', \App\Http\Controllers\CreateDoctorInformationController::class);

@@ -48,6 +48,7 @@ class UpdateDoctorInformationTest extends TestCase
         (new RolesSeeder())->run();
         $user = User::factory()->create();
         $user->assignRole('doctor');
+        DoctorInformation::factory()->create(['user_id' => $user->id]);
         Sanctum::actingAs($user);
         $response = $this->patchJson('/api/updateDoctorInformation', $data);
         $response->assertStatus(422);

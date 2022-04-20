@@ -8,7 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
-class UserRegistrationController extends Controller
+class UserRegistrationController
 {
     public function __invoke(UserRegistrationRequest $request): JsonResponse
     {
