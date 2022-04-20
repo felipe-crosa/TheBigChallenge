@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Submissions;
 
+use App\Models\DoctorInformation;
 use App\Models\PatientInformation;
 use App\Models\Submission;
 use App\Models\User;
@@ -58,10 +59,15 @@ class GetSubmissionTest extends TestCase
         PatientInformation::factory()->create(['user_id' => $patient->id]);
         $submission = Submission::factory()->create([
             'patient_id' => $patient->id,
+            'speciality' => 'special',
         ]);
 
         $user = User::factory()->create();
         $user->assignRole('doctor');
+        DoctorInformation::factory()->create([
+            'user_id' => $user->id,
+            'speciality' => 'special',
+        ]);
         Sanctum::actingAs($user);
         $response = $this->getJson("/api/submissions/{$submission->id}");
         $response->assertSuccessful();
@@ -77,6 +83,10 @@ class GetSubmissionTest extends TestCase
         $doctor = User::factory()->create();
         $doctor->assignRole('doctor');
         Sanctum::actingAs($doctor);
+        DoctorInformation::factory()->create([
+            'user_id' => $doctor->id,
+            'speciality' => 'special',
+        ]);
 
         $patient = User::factory()->create();
         $patient->assignRole('patient');
@@ -84,6 +94,7 @@ class GetSubmissionTest extends TestCase
         $submission = Submission::factory()->create([
             'patient_id' => $patient->id,
             'doctor_id' => $doctor->id,
+            'speciality' => 'special',
         ]);
         $response = $this->getJson("/api/submissions/{$submission->id}");
 
@@ -103,6 +114,9 @@ class GetSubmissionTest extends TestCase
         $doctor = User::factory()->create();
         $doctor = $doctor->assignRole('doctor');
         Sanctum::actingAs($doctor);
+        $docInfo = DoctorInformation::factory()->create([
+            'user_id' => $doctor->id,
+        ]);
 
         $patient = User::factory()->create();
         $patient->assignRole('patient');
@@ -110,6 +124,7 @@ class GetSubmissionTest extends TestCase
         $submission = Submission::factory()->create([
             'patient_id' => $patient->id,
             'doctor_id' => $assignedDoctor->id,
+            'speciality' => $docInfo->speciality,
         ]);
         $response = $this->getJson("/api/submissions/{$submission->id}");
 

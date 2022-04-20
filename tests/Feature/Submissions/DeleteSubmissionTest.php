@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Submissions;
 
+use App\Models\PatientInformation;
 use App\Models\Submission;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
@@ -18,6 +19,7 @@ class DeleteSubmissionTest extends TestCase
         (new RolesSeeder())->run();
         $patient = User::factory()->create();
         $patient->assignRole('patient');
+        PatientInformation::factory()->create(['user_id' => $patient->id]);
         $submission = Submission::factory()->create([
             'patient_id' => $patient->id,
         ]);

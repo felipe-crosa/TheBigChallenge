@@ -11,6 +11,7 @@ class UpdatePatientInformationController extends Controller
 {
     public function __invoke(UpdatePatientInformationRequest $request) : PatientInformationResource
     {
+        Auth::user()->can('update', PatientInformation::class);
         $patient = PatientInformation::where('user_id', Auth::id())->first();
         $patient->update($request->validated());
 

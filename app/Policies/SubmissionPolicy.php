@@ -10,6 +10,16 @@ class SubmissionPolicy
 {
     use HandlesAuthorization;
 
+    public function viewAll(User $user): bool
+    {
+        return $user->hasRole('patient') || ($user->hasRole('doctor') && $user->doctorInformation);
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->hasRole('patient') && $user->patientInformation;
+    }
+
     public function delete(User $user, Submission $submission): bool
     {
         return $user->id == $submission->patient_id;

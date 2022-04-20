@@ -3,6 +3,7 @@
 namespace Tests\Feature\Submissions;
 
 use App\Models\DoctorInformation;
+use App\Models\PatientInformation;
 use App\Models\Submission;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
@@ -19,6 +20,7 @@ class GetAllSubmissionTest extends TestCase
         (new RolesSeeder())->run();
         $user = User::factory()->create();
         $user->assignRole('patient');
+        PatientInformation::factory()->create(['user_id' => $user->id]);
         Sanctum::actingAs($user);
         Submission::factory()->count(4)->create(['patient_id' => $user->id]);
         Submission::factory()->count(5)->create();
@@ -33,6 +35,10 @@ class GetAllSubmissionTest extends TestCase
         (new RolesSeeder())->run();
         $user = User::factory()->create();
         $user->assignRole('doctor');
+        DoctorInformation::factory()->create([
+            'user_id' => $user->id,
+            'speciality' => 'special',
+        ]);
 
         $otherDoctor = User::factory()->create();
         $otherDoctor->assignRole('doctor');
@@ -41,8 +47,13 @@ class GetAllSubmissionTest extends TestCase
         ]);
 
         Sanctum::actingAs($user);
-        Submission::factory()->count(4)->create(['doctor_id' => $user->id]);
-        Submission::factory()->count(2)->create();
+        Submission::factory()->count(4)->create([
+            'doctor_id' => $user->id,
+            'speciality' => 'special',
+        ]);
+        Submission::factory()->count(2)->create([
+            'speciality' => 'special',
+        ]);
         Submission::factory()->count(3)->create(['doctor_id' => $otherDoctor->id]);
 
         $response = $this->getJson('/api/submissions');
