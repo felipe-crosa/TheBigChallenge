@@ -20,7 +20,7 @@ class CreateDoctorInformationRequest extends FormRequest
         ];
     }
 
-    public function prepareForValidation(): array
+    public function prepareForValidation(): void
     {
         $this->merge([
             'institution' => ucwords($this['institution']),
