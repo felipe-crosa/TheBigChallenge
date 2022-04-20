@@ -7,7 +7,7 @@ use App\Http\Resources\SubmissionResource;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Auth;
 
-class CreateSubmissionController extends Controller
+class CreateSubmissionController
 {
     public function __invoke(CreateSubmissionRequest $createRequest): SubmissionResource
     {

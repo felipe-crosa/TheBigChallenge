@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
-class UserLoginController extends Controller
+class UserLoginController
 {
     public function __invoke(UserLoginRequest $request): UserResource|JsonResponse
     {

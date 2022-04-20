@@ -7,7 +7,7 @@ use App\Http\Resources\DoctorInformationResource;
 use App\Models\DoctorInformation;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateDoctorInformationController extends Controller
+class UpdateDoctorInformationController
 {
     public function __invoke(UpdateDoctorInformationRequest $request) : DoctorInformationResource
     {

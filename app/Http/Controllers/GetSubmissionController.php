@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SubmissionResource;
 use App\Models\Submission;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class GetSubmissionController extends Controller
+class GetSubmissionController
 {
-    public function __invoke(Submission $submission): JsonResponse|SubmissionResource
+    public function __invoke(Submission $submission): SubmissionResource
     {
         Auth::user()->can('view', $submission);
 

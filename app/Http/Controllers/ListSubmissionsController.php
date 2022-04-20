@@ -6,9 +6,9 @@ use App\Http\Resources\SubmissionResourceCollection;
 use App\Models\Submission;
 use Illuminate\Support\Facades\Auth;
 
-class ListSubmissionsController extends Controller
+class ListSubmissionsController
 {
-    public function __invoke()
+    public function __invoke() : SubmissionResourceCollection
     {
         Auth::user()->can('viewAny', Submission::class);
 

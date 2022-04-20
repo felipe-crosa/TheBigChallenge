@@ -6,7 +6,7 @@ use App\Models\Submission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-class DeleteSubmissionController extends Controller
+class DeleteSubmissionController
 {
     public function __invoke(Submission $submission): JsonResponse
     {
