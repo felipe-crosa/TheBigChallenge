@@ -9,7 +9,7 @@ class CreateDoctorInformationRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return ! isset(Auth::user()->doctorInformation);
+        return Auth::user()->hasRole('doctor') && ! isset(Auth::user()->doctorInformation);
     }
 
     public function rules(): array
@@ -20,7 +20,7 @@ class CreateDoctorInformationRequest extends FormRequest
         ];
     }
 
-    public function prepareForValidation()
+    public function prepareForValidation(): array
     {
         $this->merge([
             'institution' => ucwords($this['institution']),

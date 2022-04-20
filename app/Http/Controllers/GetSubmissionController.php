@@ -10,7 +10,9 @@ class GetSubmissionController
 {
     public function __invoke(Submission $submission): SubmissionResource
     {
-        Auth::user()->can('view', $submission);
+        if (Auth::user()->cannot('view', $submission)) {
+            abort(403);
+        }
 
         return (new SubmissionResource($submission))->additional([
             'status' => 200,
