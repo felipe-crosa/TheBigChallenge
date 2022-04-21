@@ -12,9 +12,7 @@ class SubmissionPolicy
 
     public function viewAll(User $user): bool
     {
-        $condition = boolval($user->doctorInformation);
-
-        return $user->hasRole('patient') || ($user->hasRole('doctor') && $condition);
+        return $user->hasRole('patient') || ($user->hasRole('doctor') && $user->doctorInformation);
     }
 
     public function create(User $user): bool
