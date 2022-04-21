@@ -12,7 +12,9 @@ class SubmissionPolicy
 
     public function viewAll(User $user): bool
     {
-        return $user->hasRole('patient') || ($user->hasRole('doctor') && $user->doctorInformation);
+        $condition = boolval($user->doctorInformation);
+
+        return $user->hasRole('patient') || ($user->hasRole('doctor') && $condition);
     }
 
     public function create(User $user): bool
@@ -23,6 +25,11 @@ class SubmissionPolicy
     public function delete(User $user, Submission $submission): bool
     {
         return $user->id == $submission->patient_id;
+    }
+
+    public function assign(User $user, Submission $submission): bool
+    {
+        return (! $submission->doctor_id) && ($user->hasRole('doctor')) && ($user->doctorInformation);
     }
 
     public function update(User $user, Submission $submission)

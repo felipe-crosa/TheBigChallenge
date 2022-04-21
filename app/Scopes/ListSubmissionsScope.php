@@ -23,8 +23,9 @@ class ListSubmissionsScope implements Scope
             $builder->where('patient_id', $user->id);
         } elseif ($user->hasRole('doctor')) {
             $builder->whereNull('doctor_id')->orWhere('doctor_id', $user->id);
-            if ($user->doctorInformation) {
-                $builder->where('speciality', $user->doctorInformation->speciality);
+            $information = $user->doctorInformation;
+            if ($information) {
+                $builder->where('speciality', $information->speciality);
             }
         }
     }
