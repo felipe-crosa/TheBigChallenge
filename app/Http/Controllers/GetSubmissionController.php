@@ -11,7 +11,7 @@ class GetSubmissionController
     public function __invoke(Submission $submission): SubmissionResource
     {
         if (Auth::user()->cannot('view', $submission)) {
-            abort(403);
+            abort(403, 'You are not authorized to view this submission');
         }
 
         return (new SubmissionResource($submission))->additional([
