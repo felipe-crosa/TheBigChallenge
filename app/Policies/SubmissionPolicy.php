@@ -25,6 +25,11 @@ class SubmissionPolicy
         return $user->id == $submission->patient_id;
     }
 
+    public function update(User $user, Submission $submission)
+    {
+        return ($user->id == $submission->patient_id) && (boolval($submission->doctor_id) == false);
+    }
+
     public function view(User $user, Submission $submission): bool
     {
         $isAssigned = $submission->doctor_id != null;

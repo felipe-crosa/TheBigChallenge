@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PatientInformation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -10,7 +11,7 @@ class UpdatePatientInformationRequest extends FormRequest
 {
     public function authorize() : bool
     {
-        return Auth::user()->hasRole('patient');
+        return Auth::user()->can('update', PatientInformation::class);
     }
 
     public function rules() : array

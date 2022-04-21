@@ -10,7 +10,9 @@ class DeleteSubmissionController
 {
     public function __invoke(Submission $submission): JsonResponse
     {
-        Auth::user()->can('delete', $submission);
+        if (Auth::user()->cannot('delete', $submission)) {
+            abort(403, 'You dont own this submission');
+        }
         $submission->delete();
 
         return response()->json([

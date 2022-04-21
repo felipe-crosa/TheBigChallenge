@@ -11,8 +11,6 @@ class UpdateDoctorInformationController
 {
     public function __invoke(UpdateDoctorInformationRequest $request) : DoctorInformationResource
     {
-        Auth::user()->can('update', DoctorInformation::class);
-
         $doctor = DoctorInformation::where('user_id', Auth::id())->first();
         $doctor->update($request->validated());
 

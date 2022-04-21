@@ -10,7 +10,7 @@ class CreatePatientInformationRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return ! isset(Auth::user()->patientInformation);
+        return Auth::user()->hasRole('patient') && ! isset(Auth::user()->patientInformation);
     }
 
     public function rules(): array

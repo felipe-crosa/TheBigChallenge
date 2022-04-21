@@ -10,7 +10,9 @@ class ListSubmissionsController
 {
     public function __invoke() : SubmissionResourceCollection
     {
-        Auth::user()->can('viewAny', Submission::class);
+        if (Auth::user()->cannot('viewAll', Submission::class)) {
+            abort(403, 'You are not authorized to view submissions');
+        }
 
         return new SubmissionResourceCollection(Submission::all());
     }
