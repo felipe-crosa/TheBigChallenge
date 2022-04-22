@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserLoginController
 {
-    public function __invoke(UserLoginRequest $request): UserResource|JsonResponse
+    public function __invoke(UserLoginRequest $request)/*: UserResource|JsonResponse*/
     {
         $arguments = $request->validated();
 

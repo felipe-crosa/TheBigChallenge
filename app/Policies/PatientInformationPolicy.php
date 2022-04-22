@@ -16,7 +16,7 @@ class PatientInformationPolicy
 
     public function create(User $user): bool
     {
-        return $user->hasRole('patient');
+        return $user->hasRole('patient') && ! $user->patientInformation;
     }
 
     public function update(User $user): bool
