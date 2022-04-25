@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class DeleteDiagnosisRequest extends FormRequest
 {
@@ -17,8 +16,6 @@ class DeleteDiagnosisRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'fileName' => ['required', 'string', Rule::exists('submissions', 'diagnosis')],
-        ];
+        return [];
     }
 }
