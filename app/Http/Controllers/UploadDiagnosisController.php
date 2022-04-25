@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadDiagnosisRequest;
 use App\Models\Submission;
+use App\Providers\SubmissionDiagnosed;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -21,6 +22,8 @@ class UploadDiagnosisController extends Controller
         );
         $submission->diagnosis = $fileName;
         $submission->save();
+
+        SubmissionDiagnosed::dispatch($submission);
 
         return response()->json([
             'message' => 'File uploaded',
