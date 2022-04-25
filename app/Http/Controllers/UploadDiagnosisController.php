@@ -22,6 +22,10 @@ class UploadDiagnosisController extends Controller
         $submission->diagnosis = $fileName;
         $submission->save();
 
-        return response()->json(['message' => 'File uploaded'], 200);
+        return response()->json([
+            'message' => 'File uploaded',
+            'fileName' => $fileName,
+
+        ], 200);
     }
 }
