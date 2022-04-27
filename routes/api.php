@@ -31,6 +31,7 @@ Route::group(['middleware' => ['role:doctor']], function () {
     Route::post('/createDoctorInformation', \App\Http\Controllers\CreateDoctorInformationController::class);
     Route::get('/getDoctorInformation', \App\Http\Controllers\GetDoctorInformationController::class);
     Route::patch('/updateDoctorInformation', \App\Http\Controllers\UpdateDoctorInformationController::class);
+    Route::patch('/submissions/{submission}/assign', \App\Http\Controllers\AssignSubmissionController::class);
 });
 
 Route::group(['middleware' => ['role:patient']], function () {

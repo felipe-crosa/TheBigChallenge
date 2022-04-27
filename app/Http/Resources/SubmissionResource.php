@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @mixin Submission
+ * @property-read string $status
  */
 class SubmissionResource extends JsonResource
 {
@@ -30,6 +31,7 @@ class SubmissionResource extends JsonResource
             'observations' => $this->observations,
             'diagnosis' => $this->diagnosis,
             'speciality' => $this->speciality,
+            'status' => $this->status,
         ];
     }
 }
