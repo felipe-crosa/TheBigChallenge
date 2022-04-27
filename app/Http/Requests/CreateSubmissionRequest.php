@@ -25,4 +25,11 @@ class CreateSubmissionRequest extends FormRequest
             'diagnostic' => ['nullable', 'file', 'mimes:txt'],
         ];
     }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'patient_id' => Auth::id(),
+        ]);
+    }
 }
