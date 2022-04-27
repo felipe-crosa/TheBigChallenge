@@ -35,7 +35,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('/submissions/{submission}/deleteDiagnosis', \App\Http\Controllers\DeleteDiagnosisController::class);
     });
 
-
     Route::group(['middleware' => ['role:patient']], function () {
         Route::post('/createPatientInformation', \App\Http\Controllers\CreatePatientInformationController::class);
         Route::patch('/updatePatientInformation', \App\Http\Controllers\UpdatePatientInformationController::class);
