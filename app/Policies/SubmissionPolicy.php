@@ -43,4 +43,14 @@ class SubmissionPolicy
 
         return $canDoctorView || $canPatientView;
     }
+
+    public function diagnose(User $user, Submission $submission): bool
+    {
+        return (! $submission->diagnosis) && ($submission->doctor_id == $user->id) && ($user->hasRole('doctor') && ($user->doctorInformation));
+    }
+
+    public function deleteDiagnosis(User $user, Submission $submission): bool
+    {
+        return ($submission->diagnosis) && ($user->hasRole('doctor') && ($user->doctorInformation));
+    }
 }

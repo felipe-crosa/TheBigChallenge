@@ -14,6 +14,7 @@ class CreatePatientInformationController
 
         return (new PatientInformationResource($patient))
             ->additional([
+                'test' => Auth::user(),
                 'status' => 200,
                 'message' => 'Information has been successfully created',
             ]);
