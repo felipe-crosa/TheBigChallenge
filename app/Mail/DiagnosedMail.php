@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Submission;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -23,7 +22,6 @@ class DiagnosedMail extends Mailable
     {
         return $this->markdown('emails.diagnosed', [
             'user' => $this->user,
-//            'submission' => $this->submission,
         ]);
     }
 }

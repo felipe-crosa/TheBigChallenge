@@ -17,7 +17,7 @@ class DeleteDiagnosisController
         $submission->diagnosis = null;
         $submission->save();
 
-        Storage::disk('do')->delete("{$folder}/{$fileName}");
+        Storage::delete("{$folder}/{$fileName}");
         $cdnService->purge($fileName);
 
         return response()->json(['message' => 'File deleted'], 200);

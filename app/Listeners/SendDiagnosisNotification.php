@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace App\Listeners;
 
+use App\Events\SubmissionDiagnosed;
 use App\Mail\DiagnosedMail;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;

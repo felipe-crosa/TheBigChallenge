@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SubmissionDiagnosed;
 use App\Http\Requests\UploadDiagnosisRequest;
 use App\Models\Submission;
-use App\Providers\SubmissionDiagnosed;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -15,8 +15,7 @@ class UploadDiagnosisController extends Controller
         $file = $request->file('diagnosisFile');
         $fileName = (string) Str::uuid();
         $folder = config('filesystems.disks.do.folder');
-
-        Storage::disk('do')->put(
+        Storage::put(
             "{$folder}/{$fileName}",
             file_get_contents($file)
         );

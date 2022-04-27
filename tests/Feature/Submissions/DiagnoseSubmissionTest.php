@@ -20,7 +20,6 @@ class DiagnoseSubmissionTest extends TestCase
     public function test_diagnosis_is_stored()
     {
         $this->markTestSkipped('Does not work on github');
-
         (new RolesSeeder())->run();
         $doctor = User::factory()->create();
         $doctor->assignRole('doctor');
