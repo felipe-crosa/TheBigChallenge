@@ -14,6 +14,6 @@ class ListSubmissionsController
             abort(403, 'You are not authorized to view submissions');
         }
 
-        return new SubmissionResourceCollection(Submission::all());
+        return new SubmissionResourceCollection(Submission::filter(request(['status', 'search']))->get());
     }
 }

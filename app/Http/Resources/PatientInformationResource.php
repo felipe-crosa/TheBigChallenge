@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\PatientInformation;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -16,6 +17,7 @@ class PatientInformationResource extends JsonResource
             'id' => $this->id,
             'height' => $this->height,
             'date_of_birth' => $this->date_of_birth,
+            'age' => Carbon::parse($this->date_of_birth)->age,
             'weight' => $this->weight,
             'gender' => $this->gender,
             'allergies' => $this->allergies,

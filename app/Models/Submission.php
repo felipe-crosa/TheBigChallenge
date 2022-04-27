@@ -19,6 +19,27 @@ class Submission extends Model
         static::addGlobalScope(new ListSubmissionsScope());
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when(
+            $filters['status'] ?? false,
+            function ($query, $status) {
+                if ($status == 'pending') {
+                    $query->whereNull('doctor_id');
+                } elseif ($status == 'in-review') {
+                    $query->whereNotNull('doctor_id')->whereNull('diagnosis');
+                } elseif ($status == 'resolved') {
+                    $query->whereNotNull('diagnosis');
+                }
+            }
+        );
+
+        $query->when(
+            $filters['search'] ?? false,
+            fn ($query, $search) => $query->where('symptoms', 'LIKE', '%'.$search.'%')
+        );
+    }
+
     protected function status(): Attribute
     {
         $status = 'pending';
