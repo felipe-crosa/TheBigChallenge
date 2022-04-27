@@ -25,6 +25,11 @@ class SubmissionPolicy
         return $user->id == $submission->patient_id;
     }
 
+    public function assign(User $user, Submission $submission): bool
+    {
+        return (! $submission->doctor_id) && ($user->hasRole('doctor')) && ($user->doctorInformation);
+    }
+
     public function update(User $user, Submission $submission)
     {
         return ($user->id == $submission->patient_id) && (boolval($submission->doctor_id) == false);
