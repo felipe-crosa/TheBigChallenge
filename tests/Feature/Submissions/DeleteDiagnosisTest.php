@@ -48,7 +48,7 @@ class DeleteDiagnosisTest extends TestCase
             'diagnosis' => 'testing',
         ]);
 
-        $response = $this->postJson("/api/submissions/{$submission->id}/deleteDiagnosis");
+        $response = $this->deleteJson("/api/submissions/{$submission->id}/deleteDiagnosis");
 
         $response->assertSuccessful();
     }

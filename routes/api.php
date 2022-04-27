@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/getDoctorInformation', \App\Http\Controllers\GetDoctorInformationController::class);
         Route::patch('/updateDoctorInformation', \App\Http\Controllers\UpdateDoctorInformationController::class);
         Route::post('/submissions/{submission}/diagnose', \App\Http\Controllers\UploadDiagnosisController::class);
-        Route::post('/submissions/{submission}/deleteDiagnosis', \App\Http\Controllers\DeleteDiagnosisController::class);
+        Route::delete('/submissions/{submission}/deleteDiagnosis', \App\Http\Controllers\DeleteDiagnosisController::class);
     });
 
     Route::group(['middleware' => ['role:patient']], function () {
