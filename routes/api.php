@@ -44,4 +44,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::patch('/submissions/{submission}/update', \App\Http\Controllers\UpdateSubmissionController::class);
     });
 });
-
