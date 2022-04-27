@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Events\SubmissionDiagnosed;
 use App\Http\Requests\UploadDiagnosisRequest;
 use App\Models\Submission;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UploadDiagnosisController extends Controller
 {
-    public function __invoke(UploadDiagnosisRequest $request, Submission $submission)
+    public function __invoke(UploadDiagnosisRequest $request, Submission $submission): JsonResponse
     {
         $file = $request->file('diagnosisFile');
         $fileName = (string) Str::uuid();

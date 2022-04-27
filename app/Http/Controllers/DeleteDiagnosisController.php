@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeleteDiagnosisRequest;
 use App\Models\Submission;
 use App\Services\CdnService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteDiagnosisController
 {
-    public function __invoke(DeleteDiagnosisRequest $request, Submission $submission, CdnService $cdnService)
+    public function __invoke(DeleteDiagnosisRequest $request, Submission $submission, CdnService $cdnService): JsonResponse
     {
         $fileName = $submission->diagnosis;
         $folder = config('filesystems.disks.do.folder');
