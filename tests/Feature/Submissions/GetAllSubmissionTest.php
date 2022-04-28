@@ -22,7 +22,9 @@ class GetAllSubmissionTest extends TestCase
         $user->assignRole('patient');
         PatientInformation::factory()->create(['user_id' => $user->id]);
         Sanctum::actingAs($user);
-        Submission::factory()->count(4)->create(['patient_id' => $user->id]);
+        Submission::factory()->count(4)->create([
+            'patient_id' => $user->id,
+        ]);
         Submission::factory()->count(5)->create();
 
         $response = $this->getJson('/api/submissions');

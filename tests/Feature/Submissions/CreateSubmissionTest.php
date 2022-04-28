@@ -23,7 +23,6 @@ class CreateSubmissionTest extends TestCase
         Sanctum::actingAs($patient);
 
         $data = [
-            'patient_id' => $patient->id,
             'symptoms' => 'Symptoms',
             'observations' => 'Observations',
             'speciality' => 'General',
@@ -64,26 +63,14 @@ class CreateSubmissionTest extends TestCase
     public function invalidSubmissionDataProvider()
     {
         return [
-            ['noPatient' => [
-                'symptoms' => 'Symptoms',
-                'observations' => 'Observations',
-                'speciality' => 'General',
-            ]],
+
             ['noSymptoms' => [
-                'patient_id' => 1,
                 'observations' => 'Observations',
                 'speciality' => 'General',
             ]],
             ['noSpeciality' => [
-                'patient_id' => 1,
                 'symptoms' => 'Symptoms',
                 'observations' => 'Observations',
-            ]],
-            ['invalidPatient' => [
-                'patient_id' => -1,
-                'symptoms' => 'Symptoms',
-                'observations' => 'Observations',
-                'speciality' => 'General',
             ]],
         ];
     }
