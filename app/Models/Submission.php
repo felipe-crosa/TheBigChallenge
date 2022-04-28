@@ -35,6 +35,11 @@ class Submission extends Model
         );
 
         $query->when(
+            $filters['speciality'] ?? false,
+            fn ($query, $speciality) => $query->where('speciality', $speciality)
+        );
+
+        $query->when(
             $filters['search'] ?? false,
             fn ($query, $search) => $query->where('symptoms', 'LIKE', '%'.$search.'%')
         );
