@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'patient_information' => new PatientInformationResource($this->whenLoaded('patientInformation')),
             'doctor_information' => new DoctorInformationResource($this->whenLoaded('doctorInformation')),
             'role' => $this->when(boolval($this->roles), $this->roles->pluck('name')),
-            'filled_information' => $this->patientInformation()->count()>0 || $this->doctorInformation()->count()>0
+            'filled_information' => $this->patientInformation()->count() > 0 || $this->doctorInformation()->count() > 0,
         ];
     }
 }
