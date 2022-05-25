@@ -3,6 +3,7 @@
 namespace Tests\Feature\PatientInformation;
 
 use App\Models\PatientInformation;
+use App\Models\User;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
